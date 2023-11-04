@@ -9,11 +9,8 @@ pipeline {
                 // Clone the repository
                 git 'https://github.com/dmolio/Jenkins-Zero-To-Hero.git'
                 
-                // Change the current directory to 'multi-stage-test/backend'
-                dir('multi-stage-test/backend') {
-                    // Build the application and run tests
-                    sh 'mvn clean install'
-                }
+                // Build the application and run tests
+                sh 'mvn clean install'
             }
         }
         stage('Front-end') {
@@ -21,14 +18,11 @@ pipeline {
                 docker { image 'node:16-alpine' }
             }
             steps {
-                // Use the same repository, already cloned
-                dir('multi-stage-test/frontend') {
-                    // Install dependencies
-                    sh 'npm install'
-                    
-                    // Run tests
-                    sh 'npm test'
-                }
+                // Install dependencies
+                sh 'npm install'
+                
+                // Run tests
+                sh 'npm test'
             }
         }
     }
