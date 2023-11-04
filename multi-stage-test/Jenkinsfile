@@ -1,0 +1,32 @@
+pipeline {
+    agent none
+    stages {
+        stage('Back-end') {
+            agent {
+                docker { image 'maven:3.8.1-adoptopenjdk-11' }
+            }
+            steps {
+                // Clone the back-end repository
+                git 'https://github.com/yourusername/backend-repo.git'
+                
+                // Build the application and run tests
+                sh 'mvn clean install'
+            }
+        }
+        stage('Front-end') {
+            agent {
+                docker { image 'node:16-alpine' }
+            }
+            steps {
+                // Clone the front-end repository
+                git 'https://github.com/yourusername/frontend-repo.git'
+                
+                // Install dependencies
+                sh 'npm install'
+                
+                // Run tests
+                sh 'npm test'
+            }
+        }
+    }
+}
