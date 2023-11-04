@@ -6,11 +6,14 @@ pipeline {
                 docker { image 'maven:3.8.1-adoptopenjdk-11' }
             }
             steps {
-                // Clone the back-end repository
-                git 'https://github.com/yourusername/backend-repo.git'
+                // Clone the repository
+                git 'https://github.com/dmolio/Jenkins-Zero-To-Hero.git'
                 
-                // Build the application and run tests
-                sh 'mvn clean install'
+                // Change the current directory to 'multi-stage-test/backend'
+                dir('multi-stage-test/backend') {
+                    // Build the application and run tests
+                    sh 'mvn clean install'
+                }
             }
         }
         stage('Front-end') {
@@ -18,14 +21,14 @@ pipeline {
                 docker { image 'node:16-alpine' }
             }
             steps {
-                // Clone the front-end repository
-                git 'https://github.com/yourusername/frontend-repo.git'
-                
-                // Install dependencies
-                sh 'npm install'
-                
-                // Run tests
-                sh 'npm test'
+                // Use the same repository, already cloned
+                dir('multi-stage-test/frontend') {
+                    // Install dependencies
+                    sh 'npm install'
+                    
+                    // Run tests
+                    sh 'npm test'
+                }
             }
         }
     }
