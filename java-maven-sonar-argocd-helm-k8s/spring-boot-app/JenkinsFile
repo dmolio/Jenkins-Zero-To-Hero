@@ -1,10 +1,4 @@
 pipeline {
-
-options {
-        buildDiscarder(logRotator(artifactDaysToKeepStr: '', daysToKeepStr: '', numToKeepStr: '5'))
-    }
-
-
   agent {
     docker {
       image 'abhishekf5/maven-abhishek-docker-agent:v1'
@@ -59,7 +53,7 @@ options {
         steps {
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                 sh '''
-                    git config user.email "dmolio.xyz@gmail.com"
+                    git config user.email "dmolio@molnafsystems.com"
                     git config user.name "dmolio"
                     BUILD_NUMBER=${BUILD_NUMBER}
                     sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
