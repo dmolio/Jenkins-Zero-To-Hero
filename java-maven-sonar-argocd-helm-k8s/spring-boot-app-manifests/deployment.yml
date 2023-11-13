@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: spring-boot-app
-        image: dmolio/ultimate-cicd:1
+        image: dmolio/ultimate-cicd
         ports:
         - containerPort: 8080
